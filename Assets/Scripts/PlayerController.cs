@@ -1,14 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : NetworkBehaviour {
 
-    [SerializeField]
-    float movementSpeed = 3f; // Unity-enheter per sekund
+    // [SerializeField]
+    float movementSpeed = 5f; // Unity-enheter per sekund
 
-    [SerializeField]
-    float rotationSpeed = 150f; // Grader per sekund
+    // [SerializeField]
+    float rotationSpeed = 300f; // Grader per sekund
 
     [SerializeField]
     GameObject bulletPrefab;
@@ -20,6 +21,11 @@ public class PlayerController : MonoBehaviour {
     float timeSinceLastShot = 0f;
 	
 	void Update () {
+
+        if (!isLocalPlayer)
+        {
+            return;
+        }
 
         float yRotation = Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime;
         float zMovement = Input.GetAxisRaw("Vertical") * movementSpeed * Time.deltaTime;
